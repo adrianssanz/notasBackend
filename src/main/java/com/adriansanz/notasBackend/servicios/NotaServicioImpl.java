@@ -1,12 +1,11 @@
 package com.adriansanz.notasBackend.servicios;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.adriansanz.notasBackend.entidades.Nota;
+import com.adriansanz.notasBackend.excepciones.notaNoEncontradaException;
 import com.adriansanz.notasBackend.repositorios.NotaRepositorio;
 
 @Service
@@ -24,8 +23,9 @@ public class NotaServicioImpl implements NotaServicio {
     }
 
     @Override
-    public Optional<Nota> getNotaById(Long id) {
-        return notaRepositorio.findById(id);
+    public Nota getNotaById(Long id) {
+        return notaRepositorio.findById(id)
+                .orElseThrow(() -> new notaNoEncontradaException(id));
     }
 
     @Override
@@ -35,7 +35,9 @@ public class NotaServicioImpl implements NotaServicio {
 
     @Override
     public void deleteNota(Long id) {
-        notaRepositorio.deleteById(id);
+        Nota nota = notaRepositorio.findById(id)
+                .orElseThrow(() -> new notaNoEncontradaException(id));
+        notaRepositorio.delete(nota);
     }
     
 }

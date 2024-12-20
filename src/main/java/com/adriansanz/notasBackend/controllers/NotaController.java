@@ -32,7 +32,7 @@ public class NotaController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Nota> getNotaById(@PathVariable Long id){
+    public Nota getNotaById(@PathVariable Long id){
         return notaServicio.getNotaById(id);
     }   
 
