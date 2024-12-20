@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.adriansanz.notasBackend.entidades.Nota;
 import com.adriansanz.notasBackend.servicios.NotaServicio;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/notas")
 public class NotaController {
@@ -26,7 +28,7 @@ public class NotaController {
     }
 
     @PostMapping
-    public Nota createNota(@RequestBody Nota nota){
+    public Nota createNota(@Valid @RequestBody Nota nota) {
         return notaServicio.createNota(nota);
     }
 

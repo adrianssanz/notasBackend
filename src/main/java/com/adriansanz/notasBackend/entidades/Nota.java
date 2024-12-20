@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Nota {
@@ -11,7 +13,11 @@ public class Nota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Esto hace que el ID sea autogenerado
     private Long id;
+    @NotEmpty(message = "El título no puede estar vacío")
+    @Size(max = 10, message = "El título no puede tener más de 10 caracteres")
     private String titulo;
+    @NotEmpty(message = "La descripción no puede estar vacía")
+    @Size(max = 100, message = "La descripción no puede tener más de 10 caracteres")
     private String descripcion;
 
     // Constructores, getters y setters
