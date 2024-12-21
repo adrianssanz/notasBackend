@@ -37,6 +37,15 @@ public class NotaServicioImpl implements NotaServicio {
     }
 
     @Override
+    public Nota updateNota(Long id, Nota nota) {
+        Nota notaNueva = notaRepositorio.findById(id)
+                .orElseThrow(() -> new notaNoEncontradaException(id));
+        notaNueva.setTitulo(nota.getTitulo());
+        notaNueva.setDescripcion(nota.getDescripcion());
+        return notaRepositorio.save(notaNueva);
+    }
+
+    @Override
     public void deleteNota(Long id) {
         Nota nota = notaRepositorio.findById(id)
                 .orElseThrow(() -> new notaNoEncontradaException(id));
