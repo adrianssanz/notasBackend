@@ -1,5 +1,9 @@
 package com.adriansanz.notasBackend.entidades;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +29,10 @@ public class Nota {
     @Size(max = 100, message = "La descripción no puede tener más de 10 caracteres")
     @Column(name="descripcion")
     private String descripcion;
+
+    @CreationTimestamp
+    @Column(name = "fecha_creacion", updatable = false)
+    private LocalDateTime fechaCreacion;
 
     // Constructores, getters y setters
     public Nota() {}
@@ -56,5 +64,13 @@ public class Nota {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 }
