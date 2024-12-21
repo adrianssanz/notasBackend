@@ -10,5 +10,7 @@ import com.adriansanz.notasBackend.entidades.Usuario;
 public interface UsuarioServicio {
     List<Usuario> getAllUsuarios(int page, int size);
 
+    Usuario getUsuarioById(Long id);
+
     Usuario createUsuario(Usuario usuario);
 }

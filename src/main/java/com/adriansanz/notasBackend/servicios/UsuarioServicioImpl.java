@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.adriansanz.notasBackend.entidades.Usuario;
+import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
 import com.adriansanz.notasBackend.excepciones.usuarioDuplicadoException;
 import com.adriansanz.notasBackend.repositorios.UsuarioRepositorio;
 
@@ -32,6 +33,12 @@ public Usuario createUsuario(Usuario usuario) {
 
     return usuarioRepositorio.save(usuario);
 }
+
+    @Override
+    public Usuario getUsuarioById(Long id) {
+        return usuarioRepositorio.findById(id)
+                .orElseThrow(()-> new elementoNoEncontradoException(id, "Usuario no encontrado con id: "));
+    }
 
     
 }
