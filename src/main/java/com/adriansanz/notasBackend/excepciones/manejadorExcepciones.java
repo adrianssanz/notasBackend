@@ -17,6 +17,11 @@ public class manejadorExcepciones {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(usuarioDuplicadoException.class)
+    public ResponseEntity<String> manejarUsuarioDuplicadoException(usuarioDuplicadoException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<String> manejarRutaNoEncontrada(NoHandlerFoundException ex){
         return new ResponseEntity<>("Ruta no encontrada: " + ex.getRequestURL(), HttpStatus.NOT_FOUND);
