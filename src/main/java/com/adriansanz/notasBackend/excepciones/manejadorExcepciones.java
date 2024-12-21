@@ -12,8 +12,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
 public class manejadorExcepciones {
-    @ExceptionHandler(notaNoEncontradaException.class)
-    public ResponseEntity<String> manejarNotaNoEncontradaException(notaNoEncontradaException ex) {
+    @ExceptionHandler(elementoNoEncontradoException.class)
+    public ResponseEntity<String> manejarElementoNoEncontradoException(elementoNoEncontradoException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 

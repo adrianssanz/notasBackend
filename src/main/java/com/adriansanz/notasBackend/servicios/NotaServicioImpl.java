@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.adriansanz.notasBackend.entidades.Nota;
-import com.adriansanz.notasBackend.excepciones.notaNoEncontradaException;
+import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
 import com.adriansanz.notasBackend.repositorios.NotaRepositorio;
 
 @Service
@@ -28,7 +28,7 @@ public class NotaServicioImpl implements NotaServicio {
     @Override
     public Nota getNotaById(Long id) {
         return notaRepositorio.findById(id)
-                .orElseThrow(() -> new notaNoEncontradaException(id));
+                .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class NotaServicioImpl implements NotaServicio {
     @Override
     public Nota updateNota(Long id, Nota nota) {
         Nota notaNueva = notaRepositorio.findById(id)
-                .orElseThrow(() -> new notaNoEncontradaException(id));
+                .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
         notaNueva.setTitulo(nota.getTitulo());
         notaNueva.setDescripcion(nota.getDescripcion());
         return notaRepositorio.save(notaNueva);
@@ -48,7 +48,7 @@ public class NotaServicioImpl implements NotaServicio {
     @Override
     public void deleteNota(Long id) {
         Nota nota = notaRepositorio.findById(id)
-                .orElseThrow(() -> new notaNoEncontradaException(id));
+                .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
         notaRepositorio.delete(nota);
     }
 
