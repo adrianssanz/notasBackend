@@ -8,7 +8,7 @@ import com.adriansanz.notasBackend.entidades.Nota;
 
 @Service
 public interface NotaServicio {
-    List<Nota> getAllNotas();
+    List<Nota> getAllNotas(int page, int size);
 
     Nota getNotaById(Long id);
 

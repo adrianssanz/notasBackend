@@ -14,7 +14,7 @@ public class Nota {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Esto hace que el ID sea autogenerado
     private Long id;
     @NotEmpty(message = "El título no puede estar vacío")
-    @Size(max = 10, message = "El título no puede tener más de 10 caracteres")
+    @Size(max = 20, message = "El título no puede tener más de 10 caracteres")
     private String titulo;
     @NotEmpty(message = "La descripción no puede estar vacía")
     @Size(max = 100, message = "La descripción no puede tener más de 10 caracteres")

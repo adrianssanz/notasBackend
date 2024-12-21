@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adriansanz.notasBackend.entidades.Nota;
@@ -23,8 +24,10 @@ public class NotaController {
     private NotaServicio notaServicio;
 
     @GetMapping
-    public List<Nota> getAllNotas(){
-        return notaServicio.getAllNotas();
+    public List<Nota> getAllNotas(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        return notaServicio.getAllNotas(page, size);
     }
 
     @PostMapping
@@ -33,12 +36,12 @@ public class NotaController {
     }
 
     @GetMapping("/{id}")
-    public Nota getNotaById(@PathVariable Long id){
+    public Nota getNotaById(@PathVariable Long id) {
         return notaServicio.getNotaById(id);
-    }   
+    }
 
     @DeleteMapping("/{id}")
-    public void deleteNota(@PathVariable Long id){
+    public void deleteNota(@PathVariable Long id) {
         notaServicio.deleteNota(id);
-    }   
+    }
 }
