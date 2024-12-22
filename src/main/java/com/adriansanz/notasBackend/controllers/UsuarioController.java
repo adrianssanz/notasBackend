@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adriansanz.notasBackend.entidades.Usuario;
-import com.adriansanz.notasBackend.servicios.UsuarioServicio;
+import com.adriansanz.notasBackend.servicios.Usuario.UsuarioServicio;
 
 import jakarta.validation.Valid;
 

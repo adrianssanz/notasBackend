@@ -1,4 +1,4 @@
-package com.adriansanz.notasBackend.servicios;
+package com.adriansanz.notasBackend.servicios.Nota;
 
 import java.util.List;
 

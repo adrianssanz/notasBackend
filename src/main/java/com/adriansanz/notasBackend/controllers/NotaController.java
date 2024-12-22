@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adriansanz.notasBackend.entidades.Nota;
-import com.adriansanz.notasBackend.servicios.NotaServicio;
+import com.adriansanz.notasBackend.servicios.Nota.NotaServicio;
 
 import jakarta.validation.Valid;
 
