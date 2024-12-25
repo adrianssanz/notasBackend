@@ -7,16 +7,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.adriansanz.notasBackend.entidades.Nota;
+import com.adriansanz.notasBackend.entidades.Usuario;
 import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
 import com.adriansanz.notasBackend.repositorios.NotaRepositorio;
+import com.adriansanz.notasBackend.repositorios.UsuarioRepositorio;
 
 @Service
 public class NotaServicioImpl implements NotaServicio {
     @Autowired
     private NotaRepositorio notaRepositorio;
+    private UsuarioRepositorio usuarioRepositorio;
 
-    public NotaServicioImpl(NotaRepositorio notaRepositorio) {
+    public NotaServicioImpl(NotaRepositorio notaRepositorio, UsuarioRepositorio usuarioRepositorio) {
         this.notaRepositorio = notaRepositorio;
+        this.usuarioRepositorio = usuarioRepositorio;
     }
 
     @Override
@@ -32,8 +36,16 @@ public class NotaServicioImpl implements NotaServicio {
     }
 
     @Override
-    public Nota createNota(Nota nota) {
-        return notaRepositorio.save(nota);
+    public Nota createNota(Nota nota, Long usuarioId) {
+        Usuario usuario = usuarioRepositorio.findById(usuarioId)
+                .orElseThrow(() -> new elementoNoEncontradoException(usuarioId, "Usuario no encontrado con id: "));
+        Nota notaNueva = new Nota();
+
+        notaNueva.setTitulo(nota.getTitulo());
+        notaNueva.setDescripcion(nota.getDescripcion());
+        notaNueva.setUsuario(usuario);
+
+        return notaRepositorio.save(notaNueva);
     }
 
     @Override

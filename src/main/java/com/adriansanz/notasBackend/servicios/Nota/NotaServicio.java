@@ -12,7 +12,7 @@ public interface NotaServicio {
 
     Nota getNotaById(Long id);
 
-    Nota createNota(Nota nota);
+    Nota createNota(Nota nota, Long usuarioId);
 
     Nota updateNota(Long id, Nota nota);
 

@@ -31,9 +31,9 @@ public class NotaController {
         return notaServicio.getAllNotas(page, size);
     }
 
-    @PostMapping
-    public Nota createNota(@Valid @RequestBody Nota nota) {
-        return notaServicio.createNota(nota);
+    @PostMapping("/{usuarioId}")
+    public Nota createNota(@PathVariable Long usuarioId, @Valid @RequestBody Nota nota) {
+        return notaServicio.createNota(nota, usuarioId);
     }
 
     @GetMapping("/{id}")
