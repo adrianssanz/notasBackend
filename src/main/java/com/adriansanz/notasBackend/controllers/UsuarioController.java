@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adriansanz.notasBackend.dto.UsuarioDTO;
 import com.adriansanz.notasBackend.entidades.Usuario;
 import com.adriansanz.notasBackend.servicios.Usuario.UsuarioServicio;
 
@@ -23,19 +24,19 @@ public class UsuarioController {
     private UsuarioServicio usuarioServicio;
 
     @GetMapping
-    public List<Usuario> getAllUsuarios(
+    public List<UsuarioDTO> getAllUsuarios(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
         return usuarioServicio.getAllUsuarios(page, size);
     }
 
     @GetMapping("/{id}")
-    public Usuario getUsuarioById(@PathVariable Long id) {
+    public UsuarioDTO getUsuarioById(@PathVariable Long id) {
         return usuarioServicio.getUsuarioById(id);
     }   
 
     @PostMapping
-    public Usuario createUsuario(@Valid @RequestBody Usuario usuario) {
+    public UsuarioDTO createUsuario(@Valid @RequestBody Usuario usuario) {
         return usuarioServicio.createUsuario(usuario);
     }
 }
