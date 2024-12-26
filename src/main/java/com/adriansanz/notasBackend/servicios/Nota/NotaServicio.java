@@ -4,17 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.adriansanz.notasBackend.dto.NotaDTO;
 import com.adriansanz.notasBackend.entidades.Nota;
 
 @Service
 public interface NotaServicio {
-    List<Nota> getAllNotas(int page, int size);
+    List<NotaDTO> getAllNotas(int page, int size);
 
-    Nota getNotaById(Long id);
+    NotaDTO getNotaById(Long id);
 
-    Nota createNota(Nota nota, Long usuarioId);
+    NotaDTO createNota(Nota nota, Long usuarioId);
 
-    Nota updateNota(Long id, Nota nota);
+    NotaDTO updateNota(Long id, Nota nota);
 
     void deleteNota(Long id);
 }

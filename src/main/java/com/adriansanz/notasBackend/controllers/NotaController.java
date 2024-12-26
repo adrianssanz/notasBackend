@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adriansanz.notasBackend.dto.NotaDTO;
 import com.adriansanz.notasBackend.entidades.Nota;
 import com.adriansanz.notasBackend.servicios.Nota.NotaServicio;
 
@@ -25,24 +26,24 @@ public class NotaController {
     private NotaServicio notaServicio;
 
     @GetMapping
-    public List<Nota> getAllNotas(
+    public List<NotaDTO> getAllNotas(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
         return notaServicio.getAllNotas(page, size);
     }
 
     @PostMapping("/{usuarioId}")
-    public Nota createNota(@PathVariable Long usuarioId, @Valid @RequestBody Nota nota) {
+    public NotaDTO createNota(@PathVariable Long usuarioId, @Valid @RequestBody Nota nota) {
         return notaServicio.createNota(nota, usuarioId);
     }
 
     @GetMapping("/{id}")
-    public Nota getNotaById(@PathVariable Long id) {
+    public NotaDTO getNotaById(@PathVariable Long id) {
         return notaServicio.getNotaById(id);
     }
 
     @PutMapping("/{id}")
-    public Nota updateNota(@PathVariable Long id, @Valid @RequestBody Nota nota){
+    public NotaDTO updateNota(@PathVariable Long id, @Valid @RequestBody Nota nota){
         return notaServicio.updateNota(id, nota);
     }
 
