@@ -14,4 +14,6 @@ public interface UsuarioServicio {
     UsuarioDTO getUsuarioById(Long id);
 
     UsuarioDTO createUsuario(Usuario usuario);
+
+    boolean loginUsuario(String usuario, String password);
 }

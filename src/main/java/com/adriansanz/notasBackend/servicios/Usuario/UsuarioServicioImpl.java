@@ -2,9 +2,11 @@ package com.adriansanz.notasBackend.servicios.Usuario;
 
 import java.util.List;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.adriansanz.notasBackend.dto.UsuarioDTO;
@@ -46,6 +48,14 @@ public class UsuarioServicioImpl implements UsuarioServicio {
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Usuario no encontrado con id: "));
 
         return UsuarioMapper.toUsuarioDTO(usuario);
+    }
+
+    @Override
+    public boolean loginUsuario(String usuario, String password) {
+        Optional<Usuario> usuarioOptional = usuarioRepositorio.findByUsuario(usuario);
+        return usuarioOptional
+                .filter(u -> new BCryptPasswordEncoder().matches(password, u.getPassword()))
+                .isPresent();
     }
 
 }
