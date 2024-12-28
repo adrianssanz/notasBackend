@@ -3,6 +3,7 @@ package com.adriansanz.notasBackend.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,5 +39,10 @@ public class UsuarioController {
     @PostMapping
     public UsuarioDTO createUsuario(@Valid @RequestBody Usuario usuario) {
         return usuarioServicio.createUsuario(usuario);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUsuario(@PathVariable long id){
+        usuarioServicio.deleteUsuario(id);
     }
 }

@@ -48,4 +48,11 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return UsuarioMapper.toUsuarioDTO(usuario);
     }
 
+    @Override
+    public void deleteUsuario(Long id) {
+        Usuario usuario = usuarioRepositorio.findById(id)
+                .orElseThrow(() -> new elementoNoEncontradoException(id, "Usuario no encontrado con id: "));
+        usuarioRepositorio.delete(usuario);
+    }
+
 }
