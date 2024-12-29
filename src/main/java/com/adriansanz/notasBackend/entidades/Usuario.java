@@ -30,15 +30,10 @@ public class Usuario {
     private String usuario;
 
     @NotEmpty(message = "La contraseña no puede estar vacía")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).{8,}$", message = "La contraseña debe tener al menos 8 caracteres, una letra y un número.")
     @Column(name = "password", nullable = false)
     private String password;
 
     @CreationTimestamp
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
-
-    public void setPassword(String password){
-        this.password = new BCryptPasswordEncoder().encode(password);
-    }
 }
