@@ -32,7 +32,8 @@ public class manejadorExcepciones {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ErrorResponseDTO> manejarMetodoNoPermitido(HttpRequestMethodNotSupportedException ex, HttpServletRequest request) {
+    public ResponseEntity<ErrorResponseDTO> manejarMetodoNoPermitido(HttpRequestMethodNotSupportedException ex,
+            HttpServletRequest request) {
         String path = request.getRequestURI();
 
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
@@ -40,10 +41,22 @@ public class manejadorExcepciones {
                 HttpStatus.METHOD_NOT_ALLOWED.value(),
                 "Method Not Allowed",
                 "El método de solicitud 'POST' no está permitido",
-                path
-        );
+                path);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @ExceptionHandler(idInvalidoException.class)
+    public ResponseEntity<ErrorResponseDTO> manejarIdInvalidoException(idInvalidoException ex,
+            HttpServletRequest request) {
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Conflict",
+                ex.getMessage(),
+                request.getRequestURI());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(usuarioDuplicadoException.class)
