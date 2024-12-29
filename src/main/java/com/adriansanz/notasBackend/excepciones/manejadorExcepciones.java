@@ -59,6 +59,19 @@ public class manejadorExcepciones {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<ErrorResponseDTO> manejarNumberFormatException(NumberFormatException ex,
+        HttpServletRequest request) {
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Bad Request",
+            "El formato del número es inválido",
+            request.getRequestURI());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(usuarioDuplicadoException.class)
     public ResponseEntity<ErrorResponseDTO> manejarUsuarioDuplicadoException(usuarioDuplicadoException ex,
             HttpServletRequest request) {
