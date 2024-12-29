@@ -1,4 +1,4 @@
-package com.adriansanz.notasBackend.servicios.Nota;
+package com.adriansanz.notasBackend.servicios.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
 import com.adriansanz.notasBackend.mappers.NotaMapper;
 import com.adriansanz.notasBackend.repositorios.NotaRepositorio;
 import com.adriansanz.notasBackend.repositorios.UsuarioRepositorio;
+import com.adriansanz.notasBackend.servicios.NotaServicio;
 
 @Service
 public class NotaServicioImpl implements NotaServicio {
