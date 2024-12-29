@@ -85,6 +85,19 @@ public class manejadorExcepciones {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(passwordInvalidaException.class)
+    public ResponseEntity<ErrorResponseDTO> manejarPasswordInvalidaException(passwordInvalidaException ex,
+            HttpServletRequest request) {
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Conflict",
+                ex.getMessage(),
+                request.getRequestURI());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ErrorResponseDTO> manejarRutaNoEncontrada(NoHandlerFoundException ex) {
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
