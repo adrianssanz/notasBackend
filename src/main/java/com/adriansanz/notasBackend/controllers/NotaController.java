@@ -3,6 +3,7 @@ package com.adriansanz.notasBackend.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,29 +27,30 @@ public class NotaController {
     private NotaServicio notaServicio;
 
     @GetMapping
-    public List<NotaDTO> getAllNotas(
+    public ResponseEntity<List<NotaDTO>> getAllNotas(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
         return notaServicio.getAllNotas(page, size);
     }
 
     @PostMapping("/{usuarioId}")
-    public NotaDTO createNota(@PathVariable Long usuarioId, @Valid @RequestBody Nota nota) {
+    public ResponseEntity<NotaDTO> createNota(@PathVariable Long usuarioId, @Valid @RequestBody Nota nota) {
         return notaServicio.createNota(nota, usuarioId);
     }
 
     @GetMapping("/{id}")
-    public NotaDTO getNotaById(@PathVariable Long id) {
+    public ResponseEntity<NotaDTO> getNotaById(@PathVariable Long id) {
         return notaServicio.getNotaById(id);
     }
 
     @PutMapping("/{id}")
-    public NotaDTO updateNota(@PathVariable Long id, @Valid @RequestBody Nota nota){
+    public ResponseEntity<NotaDTO> updateNota(@PathVariable Long id, @Valid @RequestBody Nota nota){
         return notaServicio.updateNota(id, nota);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteNota(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteNota(@PathVariable Long id) {
         notaServicio.deleteNota(id);
+        return ResponseEntity.noContent().build();
     }
 }

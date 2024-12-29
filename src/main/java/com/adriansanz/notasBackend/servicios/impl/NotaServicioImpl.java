@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.adriansanz.notasBackend.dto.NotaDTO;
@@ -28,25 +30,25 @@ public class NotaServicioImpl implements NotaServicio {
     }
 
     @Override
-    public List<NotaDTO> getAllNotas(int page, int size) {
+    public ResponseEntity<List<NotaDTO>> getAllNotas(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         List<Nota> notas = notaRepositorio.findAll(pageable).getContent();
-        return NotaMapper.toNotaDTOList(notas);
+        return ResponseEntity.status(HttpStatus.OK).body(NotaMapper.toNotaDTOList(notas));
     }
 
     @Override
-    public NotaDTO getNotaById(Long id) {
+    public ResponseEntity<NotaDTO> getNotaById(Long id) {
         if (id == null || id <= 0) {
             throw new idInvalidoException("El id proporcionado no es válido: " + id);
         }
 
         Nota nota = notaRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
-        return NotaMapper.toNotaDTO(nota);
+        return ResponseEntity.status(HttpStatus.OK).body(NotaMapper.toNotaDTO(nota));
     }
 
     @Override
-    public NotaDTO createNota(Nota nota, Long usuarioId) {
+    public ResponseEntity<NotaDTO> createNota(Nota nota, Long usuarioId) {
         if (usuarioId == null || usuarioId <= 0) {
             throw new idInvalidoException("El id proporcionado no es válido: " + usuarioId);
         }
@@ -61,11 +63,11 @@ public class NotaServicioImpl implements NotaServicio {
 
         notaRepositorio.save(notaNueva);
 
-        return NotaMapper.toNotaDTO(notaNueva);
+        return ResponseEntity.status(HttpStatus.CREATED).body(NotaMapper.toNotaDTO(notaNueva));
     }
 
     @Override
-    public NotaDTO updateNota(Long id, Nota nota) {
+    public ResponseEntity<NotaDTO> updateNota(Long id, Nota nota) {
         if (id == null || id <= 0) {
             throw new idInvalidoException("El id proporcionado no es válido: " + id);
         }
@@ -75,11 +77,11 @@ public class NotaServicioImpl implements NotaServicio {
         notaNueva.setTitulo(nota.getTitulo());
         notaNueva.setDescripcion(nota.getDescripcion());
         notaRepositorio.save(notaNueva);
-        return NotaMapper.toNotaDTO(notaNueva);
+        return ResponseEntity.status(HttpStatus.OK).body(NotaMapper.toNotaDTO(notaNueva));
     }
 
     @Override
-    public void deleteNota(Long id) {
+    public ResponseEntity<Void> deleteNota(Long id) {
         if (id == null || id <= 0) {
             throw new idInvalidoException("El id proporcionado no es válido: " + id);
         }
@@ -87,6 +89,7 @@ public class NotaServicioImpl implements NotaServicio {
         Nota nota = notaRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
         notaRepositorio.delete(nota);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
