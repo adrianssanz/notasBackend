@@ -1,4 +1,4 @@
-package com.adriansanz.notasBackend.servicios.Usuario;
+package com.adriansanz.notasBackend.servicios.impl;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
 import com.adriansanz.notasBackend.excepciones.usuarioDuplicadoException;
 import com.adriansanz.notasBackend.mappers.UsuarioMapper;
 import com.adriansanz.notasBackend.repositorios.UsuarioRepositorio;
+import com.adriansanz.notasBackend.servicios.UsuarioServicio;
 
 @Service
 public class UsuarioServicioImpl implements UsuarioServicio {
