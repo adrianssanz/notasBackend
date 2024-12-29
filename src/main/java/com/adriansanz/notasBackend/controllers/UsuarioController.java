@@ -3,6 +3,7 @@ package com.adriansanz.notasBackend.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,24 +26,25 @@ public class UsuarioController {
     private UsuarioServicio usuarioServicio;
 
     @GetMapping
-    public List<UsuarioDTO> getAllUsuarios(
+    public ResponseEntity<List<UsuarioDTO>> getAllUsuarios(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
         return usuarioServicio.getAllUsuarios(page, size);
     }
 
     @GetMapping("/{id}")
-    public UsuarioDTO getUsuarioById(@PathVariable Long id) {
+    public ResponseEntity<UsuarioDTO> getUsuarioById(@PathVariable Long id) {
         return usuarioServicio.getUsuarioById(id);
     }   
 
     @PostMapping
-    public UsuarioDTO createUsuario(@Valid @RequestBody Usuario usuario) {
+    public ResponseEntity<UsuarioDTO> createUsuario(@Valid @RequestBody Usuario usuario) {
         return usuarioServicio.createUsuario(usuario);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUsuario(@PathVariable long id){
+    public ResponseEntity<Void> deleteUsuario(@PathVariable long id){
         usuarioServicio.deleteUsuario(id);
+        return ResponseEntity.noContent().build();
     }
 }
