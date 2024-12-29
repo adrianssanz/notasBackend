@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.adriansanz.notasBackend.dto.UsuarioDTO;
 import com.adriansanz.notasBackend.entidades.Usuario;
 import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
+import com.adriansanz.notasBackend.excepciones.idInvalidoException;
 import com.adriansanz.notasBackend.excepciones.usuarioDuplicadoException;
 import com.adriansanz.notasBackend.mappers.UsuarioMapper;
 import com.adriansanz.notasBackend.repositorios.UsuarioRepositorio;
@@ -42,6 +43,9 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public UsuarioDTO getUsuarioById(Long id) {
+        if (id == null || id <= 0) {
+            throw new idInvalidoException("El id proporcionado no es válido: " + id);
+        }
 
         Usuario usuario = usuarioRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Usuario no encontrado con id: "));
@@ -51,6 +55,10 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public void deleteUsuario(Long id) {
+        if (id == null || id <= 0) {
+            throw new idInvalidoException("El id proporcionado no es válido: " + id);
+        }
+
         Usuario usuario = usuarioRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Usuario no encontrado con id: "));
         usuarioRepositorio.delete(usuario);

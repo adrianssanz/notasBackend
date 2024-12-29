@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.adriansanz.notasBackend.dto.NotaDTO;
 import com.adriansanz.notasBackend.entidades.Nota;
 import com.adriansanz.notasBackend.entidades.Usuario;
+import com.adriansanz.notasBackend.excepciones.idInvalidoException;
 import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
 import com.adriansanz.notasBackend.mappers.NotaMapper;
 import com.adriansanz.notasBackend.repositorios.NotaRepositorio;
@@ -35,6 +36,10 @@ public class NotaServicioImpl implements NotaServicio {
 
     @Override
     public NotaDTO getNotaById(Long id) {
+        if (id == null || id <= 0) {
+            throw new idInvalidoException("El id proporcionado no es válido: " + id);
+        }
+
         Nota nota = notaRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
         return NotaMapper.toNotaDTO(nota);
@@ -42,6 +47,10 @@ public class NotaServicioImpl implements NotaServicio {
 
     @Override
     public NotaDTO createNota(Nota nota, Long usuarioId) {
+        if (usuarioId == null || usuarioId <= 0) {
+            throw new idInvalidoException("El id proporcionado no es válido: " + usuarioId);
+        }
+
         Usuario usuario = usuarioRepositorio.findById(usuarioId)
                 .orElseThrow(() -> new elementoNoEncontradoException(usuarioId, "Usuario no encontrado con id: "));
         Nota notaNueva = new Nota();
@@ -57,6 +66,10 @@ public class NotaServicioImpl implements NotaServicio {
 
     @Override
     public NotaDTO updateNota(Long id, Nota nota) {
+        if (id == null || id <= 0) {
+            throw new idInvalidoException("El id proporcionado no es válido: " + id);
+        }
+
         Nota notaNueva = notaRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
         notaNueva.setTitulo(nota.getTitulo());
@@ -67,6 +80,10 @@ public class NotaServicioImpl implements NotaServicio {
 
     @Override
     public void deleteNota(Long id) {
+        if (id == null || id <= 0) {
+            throw new idInvalidoException("El id proporcionado no es válido: " + id);
+        }
+
         Nota nota = notaRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
         notaRepositorio.delete(nota);
