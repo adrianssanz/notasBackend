@@ -37,11 +37,6 @@ public class UsuarioController {
         return usuarioServicio.getUsuarioById(id);
     }   
 
-    @PostMapping
-    public ResponseEntity<UsuarioDTO> createUsuario(@Valid @RequestBody Usuario usuario) {
-        return usuarioServicio.createUsuario(usuario);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable long id){
         usuarioServicio.deleteUsuario(id);

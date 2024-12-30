@@ -33,27 +33,6 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     }
 
     @Override
-    public ResponseEntity<UsuarioDTO> createUsuario(Usuario usuario) {
-        usuarioRepositorio.findByUsuario(usuario.getUsuario())
-                .ifPresent(u -> {
-                    throw new usuarioDuplicadoException();
-                });
-
-        if (!usuario.getPassword().matches("^(?=.*[A-Za-z])(?=.*\\d).{8,}$")) {
-            throw new IllegalArgumentException(
-                    "La contraseña debe tener al menos 8 caracteres, una letra y un número.");
-        }
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.getPassword());
-        usuario.setPassword(encryptedPassword);
-
-        usuarioRepositorio.save(usuario);
-
-        UsuarioDTO usuarioDTO = UsuarioMapper.toUsuarioDTO(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDTO);
-    }
-
-    @Override
     public ResponseEntity<UsuarioDTO> getUsuarioById(Long id) {
         if (id == null || id <= 0) {
             throw new idInvalidoException("El id proporcionado no es válido: " + id);
