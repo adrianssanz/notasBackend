@@ -7,14 +7,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.adriansanz.notasBackend.dto.UsuarioDTO;
 import com.adriansanz.notasBackend.entidades.Usuario;
 import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
 import com.adriansanz.notasBackend.excepciones.idInvalidoException;
-import com.adriansanz.notasBackend.excepciones.usuarioDuplicadoException;
 import com.adriansanz.notasBackend.mappers.UsuarioMapper;
 import com.adriansanz.notasBackend.repositorios.UsuarioRepositorio;
 import com.adriansanz.notasBackend.servicios.UsuarioServicio;

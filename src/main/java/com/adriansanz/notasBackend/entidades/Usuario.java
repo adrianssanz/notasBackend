@@ -31,6 +31,10 @@ public class Usuario {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @OneToOne
+    @JoinColumn(name = "rol_id", nullable = false)
+    private Rol rol;
+
     @CreationTimestamp
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;

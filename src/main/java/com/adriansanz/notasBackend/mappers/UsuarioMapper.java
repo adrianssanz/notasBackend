@@ -13,7 +13,8 @@ public class UsuarioMapper {
         }
         return new UsuarioDTO(
                 usuario.getId(),
-                usuario.getUsuario()
+                usuario.getUsuario(),
+                usuario.getRol()
         );
     }
 
