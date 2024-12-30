@@ -36,12 +36,13 @@ public class manejadorExcepciones {
             HttpServletRequest request) {
         String path = request.getRequestURI();
 
+        String method = request.getMethod();
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
-                LocalDateTime.now(),
-                HttpStatus.METHOD_NOT_ALLOWED.value(),
-                "Method Not Allowed",
-                "El método de solicitud 'POST' no está permitido",
-                path);
+            LocalDateTime.now(),
+            HttpStatus.METHOD_NOT_ALLOWED.value(),
+            "Method Not Allowed",
+            "El método de solicitud '" + method + "' no está permitido",
+            path);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
     }
