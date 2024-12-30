@@ -1,16 +1,14 @@
 package com.adriansanz.notasBackend.dto;
 
-import com.adriansanz.notasBackend.entidades.Rol;
-
 public class UsuarioDTO {
     private Long id;
     private String usuario;
-    private Rol rol;
+    private RolDTO rolDTO;
 
-    public UsuarioDTO(Long id, String usuario, Rol rol) {
+    public UsuarioDTO(Long id, String usuario, RolDTO rolDTO) {
         this.id = id;
         this.usuario = usuario;
-        this.rol = rol;
+        this.rolDTO = rolDTO;
     }
 
     public Long getId() {
@@ -29,11 +27,11 @@ public class UsuarioDTO {
         this.usuario = usuario;
     }
 
-    public Rol getRol() {
-        return rol;
+    public RolDTO getRol() {
+        return rolDTO;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setRol(RolDTO rolDTO) {
+        this.rolDTO = rolDTO;
     }
 }
