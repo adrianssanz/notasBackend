@@ -10,5 +10,7 @@ import com.adriansanz.notasBackend.entidades.Usuario;
 public interface AuthServicio {
     boolean loginUsuario(String usuario, String password);
 
+    ResponseEntity<String> logoutUsuario();
+
     ResponseEntity<UsuarioDTO> registerUsuario(Usuario usuario);
 } 

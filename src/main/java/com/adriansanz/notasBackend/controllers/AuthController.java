@@ -38,4 +38,9 @@ public class AuthController {
     public ResponseEntity<UsuarioDTO> registerUsuario(@Valid @RequestBody Usuario usuario) {
         return authServicio.registerUsuario(usuario);
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logoutUsuario() {
+        return ResponseEntity.ok("Sesión cerrada correctamente.");
+    }
 }

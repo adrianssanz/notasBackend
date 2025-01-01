@@ -59,6 +59,10 @@ public class AuthServicioImpl implements AuthServicio {
 
         UsuarioDTO usuarioDTO = UsuarioMapper.toUsuarioDTO(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDTO);
-	}   
+	}
 
+    @Override
+    public ResponseEntity<String> logoutUsuario() {
+        return ResponseEntity.ok("Sesión cerrada correctamente.");
+    }  
 }
