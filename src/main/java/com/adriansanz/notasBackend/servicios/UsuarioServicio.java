@@ -13,5 +13,7 @@ public interface UsuarioServicio {
 
     ResponseEntity<UsuarioDTO> getUsuarioById(Long id);
 
+    ResponseEntity<UsuarioDTO> updateRolUsuario(Long id);
+
     ResponseEntity<Void> deleteUsuario(Long id);
 }

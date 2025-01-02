@@ -2,11 +2,13 @@ package com.adriansanz.notasBackend.controllers;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +32,12 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> getUsuarioById(@PathVariable Long id) {
         return usuarioServicio.getUsuarioById(id);
-    }   
+    }  
+
+    @PutMapping("/{id}/rol")
+    public ResponseEntity<UsuarioDTO> updateRolUsuario(@PathVariable Long id){
+        return usuarioServicio.updateRolUsuario(id);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable long id){
