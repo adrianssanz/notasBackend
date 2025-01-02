@@ -40,4 +40,8 @@ public class Nota {
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
+
+    @OneToOne
+    @JoinColumn(name = "estado_id", nullable = false)
+    private Estado estado;
 }

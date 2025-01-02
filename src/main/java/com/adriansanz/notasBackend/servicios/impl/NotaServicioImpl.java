@@ -9,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.adriansanz.notasBackend.dto.NotaDTO;
+import com.adriansanz.notasBackend.entidades.Estado;
 import com.adriansanz.notasBackend.entidades.Nota;
 import com.adriansanz.notasBackend.entidades.Usuario;
 import com.adriansanz.notasBackend.excepciones.idInvalidoException;
 import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
 import com.adriansanz.notasBackend.mappers.NotaMapper;
+import com.adriansanz.notasBackend.repositorios.EstadoRepositorio;
 import com.adriansanz.notasBackend.repositorios.NotaRepositorio;
 import com.adriansanz.notasBackend.repositorios.UsuarioRepositorio;
 import com.adriansanz.notasBackend.servicios.NotaServicio;
@@ -23,10 +25,12 @@ public class NotaServicioImpl implements NotaServicio {
     @Autowired
     private NotaRepositorio notaRepositorio;
     private UsuarioRepositorio usuarioRepositorio;
+    private EstadoRepositorio estadoRepositorio;
 
-    public NotaServicioImpl(NotaRepositorio notaRepositorio, UsuarioRepositorio usuarioRepositorio) {
+    public NotaServicioImpl(NotaRepositorio notaRepositorio, UsuarioRepositorio usuarioRepositorio, EstadoRepositorio estadoRepositorio) {
         this.notaRepositorio = notaRepositorio;
         this.usuarioRepositorio = usuarioRepositorio;
+        this.estadoRepositorio = estadoRepositorio;
     }
 
     @Override
@@ -57,9 +61,13 @@ public class NotaServicioImpl implements NotaServicio {
                 .orElseThrow(() -> new elementoNoEncontradoException(usuarioId, "Usuario no encontrado con id: "));
         Nota notaNueva = new Nota();
 
+        Estado estado = estadoRepositorio.findById(1L)
+                .orElseThrow(() -> new elementoNoEncontradoException(1L, "Estado no encontrado con id: "));
+
         notaNueva.setTitulo(nota.getTitulo());
         notaNueva.setDescripcion(nota.getDescripcion());
         notaNueva.setUsuario(usuario);
+        notaNueva.setEstado(estado);
 
         notaRepositorio.save(notaNueva);
 

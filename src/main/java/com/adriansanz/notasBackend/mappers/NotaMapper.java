@@ -16,6 +16,7 @@ public class NotaMapper {
                 nota.getTitulo(),
                 nota.getDescripcion(),
                 nota.getFechaCreacion(),
+                nota.getEstado(),
                 UsuarioMapper.toUsuarioDTO(nota.getUsuario()));
     }
 
