@@ -18,5 +18,7 @@ public interface NotaServicio {
 
     ResponseEntity<NotaDTO> updateNota(Long id, Nota nota);
 
+    ResponseEntity<NotaDTO> updateEstadoNota(Long id);
+
     ResponseEntity<Void> deleteNota(Long id);
 }

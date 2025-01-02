@@ -48,6 +48,11 @@ public class NotaController {
         return notaServicio.updateNota(id, nota);
     }
 
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<NotaDTO> updateEstadoNota(@PathVariable Long id){
+        return notaServicio.updateEstadoNota(id);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNota(@PathVariable Long id) {
         notaServicio.deleteNota(id);
