@@ -25,6 +25,7 @@ Una API RESTful desarrollada con Spring Boot para gestionar roles y usuarios, co
     - `page` (por defecto: 0)
     - `size` (por defecto: 5)
 - `GET /api/usuarios/{id}` - Obtiene los detalles de un usuario por su ID.
+- `PUT /api/usuarios/{id}/rol` - Actualiza el rol de un usuario existente por su ID. 
 - `DELETE /api/usuarios/{id}` - Elimina un usuario por su ID.
 
 ---
@@ -48,6 +49,7 @@ Una API RESTful desarrollada con Spring Boot para gestionar roles y usuarios, co
 - `POST /api/notas/{usuarioId}` - Crea una nueva nota asociada a un usuario.
 - `GET /api/notas/{id}` - Obtiene los detalles de una nota por su ID.
 - `PUT /api/notas/{id}` - Actualiza una nota existente por su ID.
+- `PUT /api/notas/{id}/estado` - Actualiza el estado de una nota existente por su ID. 
 - `DELETE /api/notas/{id}` - Elimina una nota por su ID.
 
 ---
