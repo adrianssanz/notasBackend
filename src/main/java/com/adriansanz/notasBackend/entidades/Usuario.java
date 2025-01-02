@@ -31,7 +31,7 @@ public class Usuario {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "rol_id", nullable = false)
     private Rol rol;
 
