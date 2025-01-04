@@ -18,6 +18,7 @@ import com.adriansanz.notasBackend.dto.NotaDTO;
 import com.adriansanz.notasBackend.entidades.Nota;
 import com.adriansanz.notasBackend.servicios.NotaServicio;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @RestController
@@ -29,8 +30,9 @@ public class NotaController {
     @GetMapping
     public ResponseEntity<List<NotaDTO>> getAllNotas(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
-        return notaServicio.getAllNotas(page, size);
+            @RequestParam(defaultValue = "5") int size,
+            HttpSession session) {
+        return notaServicio.getAllNotas(page, size, session);
     }
 
     @PostMapping("/{usuarioId}")

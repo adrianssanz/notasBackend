@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import com.adriansanz.notasBackend.dto.NotaDTO;
 import com.adriansanz.notasBackend.entidades.Nota;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public interface NotaServicio {
-    ResponseEntity<List<NotaDTO>> getAllNotas(int page, int size);
+    ResponseEntity<List<NotaDTO>> getAllNotas(int page, int size, HttpSession session);
 
     ResponseEntity<NotaDTO> getNotaById(Long id);
 

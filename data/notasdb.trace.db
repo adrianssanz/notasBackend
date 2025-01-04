@@ -1,8 +1,0 @@
-2025-01-02 16:52:28.927062+01:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROM ROLES where id = 1[*]USUARIOS ESTADOS"
-Syntax error in SQL statement "SELECT * FROM ROLES where id = 1[*]USUARIOS ESTADOS"; SQL statement:
-SELECT * FROM ROLES where id = 1USUARIOS ESTADOS [42000-232]
-2025-01-02 16:52:59.107049+01:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROM ESTADOS ESTADOS [*]USUARIOS"
-Syntax error in SQL statement "SELECT * FROM ESTADOS ESTADOS [*]USUARIOS"; SQL statement:
-SELECT * FROM ESTADOS ESTADOS USUARIOS [42000-232]

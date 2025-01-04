@@ -17,26 +17,35 @@ import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
 import com.adriansanz.notasBackend.mappers.NotaMapper;
 import com.adriansanz.notasBackend.repositorios.EstadoRepositorio;
 import com.adriansanz.notasBackend.repositorios.NotaRepositorio;
-import com.adriansanz.notasBackend.repositorios.UsuarioRepositorio;
+import com.adriansanz.notasBackend.servicios.AuthServicio;
 import com.adriansanz.notasBackend.servicios.NotaServicio;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class NotaServicioImpl implements NotaServicio {
     @Autowired
     private NotaRepositorio notaRepositorio;
-    private UsuarioRepositorio usuarioRepositorio;
+    private AuthServicio authServicio;
     private EstadoRepositorio estadoRepositorio;
 
-    public NotaServicioImpl(NotaRepositorio notaRepositorio, UsuarioRepositorio usuarioRepositorio, EstadoRepositorio estadoRepositorio) {
+    public NotaServicioImpl(NotaRepositorio notaRepositorio, AuthServicio authServicio, EstadoRepositorio estadoRepositorio) {
         this.notaRepositorio = notaRepositorio;
-        this.usuarioRepositorio = usuarioRepositorio;
         this.estadoRepositorio = estadoRepositorio;
+        this.authServicio = authServicio;
     }
 
     @Override
-    public ResponseEntity<List<NotaDTO>> getAllNotas(int page, int size) {
+    public ResponseEntity<List<NotaDTO>> getAllNotas(int page, int size, HttpSession session) {
+        Usuario usuario = authServicio.getSesionUsuario(session);
         Pageable pageable = PageRequest.of(page, size);
-        List<Nota> notas = notaRepositorio.findAll(pageable).getContent();
+        List<Nota> notas;
+        if(usuario.getRol().getId()!=2) {
+            notas = notaRepositorio.findAll(pageable).getContent();
+        } else {
+            notas = notaRepositorio.findByUsuario(usuario, pageable).getContent();
+        }
+        
         return ResponseEntity.status(HttpStatus.OK).body(NotaMapper.toNotaDTOList(notas));
     }
 
