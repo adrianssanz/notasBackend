@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.adriansanz.notasBackend.dto.UsuarioDTO;
 import com.adriansanz.notasBackend.entidades.Rol;
 import com.adriansanz.notasBackend.entidades.Usuario;
+import com.adriansanz.notasBackend.excepciones.UsuarioNoAutenticadoException;
 import com.adriansanz.notasBackend.excepciones.usuarioDuplicadoException;
 import com.adriansanz.notasBackend.mappers.UsuarioMapper;
 import com.adriansanz.notasBackend.repositorios.RolRepositorio;
@@ -72,7 +73,7 @@ public class AuthServicioImpl implements AuthServicio {
     public Usuario getSesionUsuario(HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario == null) {
-            throw new IllegalStateException("No hay un usuario autenticado en la sesión");
+            throw new UsuarioNoAutenticadoException("No hay un usuario autenticado en la sesión");
         }
         return usuario;
     }

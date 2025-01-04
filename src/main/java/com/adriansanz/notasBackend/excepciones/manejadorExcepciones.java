@@ -18,6 +18,17 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class manejadorExcepciones {
+    @ExceptionHandler(UsuarioNoAutenticadoException.class)
+    public ResponseEntity<ErrorResponseDTO> handleUsuarioNoAutenticado(UsuarioNoAutenticadoException ex, HttpServletRequest request) {
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+                LocalDateTime.now(),
+                HttpStatus.UNAUTHORIZED.value(),
+                "No autorizado",
+                ex.getMessage(),
+                request.getRequestURI());
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(elementoNoEncontradoException.class)
     public ResponseEntity<ErrorResponseDTO> manejarElementoNoEncontradoException(elementoNoEncontradoException ex,
             HttpServletRequest request) {
