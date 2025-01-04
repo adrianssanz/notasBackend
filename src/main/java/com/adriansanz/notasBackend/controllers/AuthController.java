@@ -1,7 +1,6 @@
 package com.adriansanz.notasBackend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +12,7 @@ import com.adriansanz.notasBackend.dto.UsuarioDTO;
 import com.adriansanz.notasBackend.entidades.Usuario;
 import com.adriansanz.notasBackend.servicios.AuthServicio;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @RestController
@@ -22,16 +22,11 @@ public class AuthController {
     private AuthServicio authServicio;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
-        boolean isAuthenticated = authServicio.loginUsuario(loginDTO.getUsuario(), loginDTO.getPassword());
-
-        if (isAuthenticated) {
-
-            return ResponseEntity.ok("Valido");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
-
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO, HttpSession session) {
+        if (authServicio.loginUsuario(loginDTO.getUsuario(), loginDTO.getPassword(), session)) {
+            return ResponseEntity.ok("Inicio de sesión exitoso");
         }
+        return ResponseEntity.status(401).body("Usuario o contraseña incorrectos");
     }
 
     @PostMapping("/register")
@@ -40,7 +35,8 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logoutUsuario() {
-        return ResponseEntity.ok("Sesión cerrada correctamente.");
+    public ResponseEntity<String> logoutUsuario(HttpSession session) {
+        authServicio.logoutUsuario(session);
+        return ResponseEntity.ok("Sesión cerrada con exito");
     }
 }

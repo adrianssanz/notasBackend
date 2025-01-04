@@ -17,6 +17,8 @@ import com.adriansanz.notasBackend.repositorios.RolRepositorio;
 import com.adriansanz.notasBackend.repositorios.UsuarioRepositorio;
 import com.adriansanz.notasBackend.servicios.AuthServicio;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class AuthServicioImpl implements AuthServicio {
 
@@ -30,11 +32,16 @@ public class AuthServicioImpl implements AuthServicio {
     }
 
     @Override
-    public boolean loginUsuario(String usuario, String password) {
-        Optional<Usuario> usuarioOptional = usuarioRepositorio.findByUsuario(usuario);
-        return usuarioOptional
-                .filter(u -> new BCryptPasswordEncoder().matches(password, u.getPassword()))
-                .isPresent();
+    public boolean loginUsuario(String username, String password, HttpSession session) {
+        Optional<Usuario> usuarioOptional = usuarioRepositorio.findByUsuario(username);
+
+        if (usuarioOptional.isPresent() &&
+            new BCryptPasswordEncoder().matches(password, usuarioOptional.get().getPassword())) {
+            session.setAttribute("usuario", usuarioOptional.get());
+            return true;
+        }
+
+        return false;
     }
 
 	@Override
@@ -62,7 +69,16 @@ public class AuthServicioImpl implements AuthServicio {
 	}
 
     @Override
-    public ResponseEntity<String> logoutUsuario() {
-        return ResponseEntity.ok("Sesión cerrada correctamente.");
+    public Usuario getSesionUsuario(HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario == null) {
+            throw new IllegalStateException("No hay un usuario autenticado en la sesión");
+        }
+        return usuario;
+    }
+
+    @Override
+    public void logoutUsuario(HttpSession session) {
+        session.invalidate();
     }  
 }
