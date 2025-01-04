@@ -36,6 +36,7 @@ Una API RESTful desarrollada con Spring Boot para gestionar roles y usuarios, co
 - `POST /api/auth/login` - Autentica un usuario mediante sus credenciales.
   - **Body:** `{ "usuario": "string", "password": "string" }`
 - `POST /api/auth/register` - Registra un nuevo usuario.
+- `POST /api/auth/logout` - Cierra la sesión del usuario autenticado.
 
 ---
 
@@ -46,6 +47,7 @@ Una API RESTful desarrollada con Spring Boot para gestionar roles y usuarios, co
   - Parámetros opcionales:
     - `page` (por defecto: 0)
     - `size` (por defecto: 5)
+  - Filtra el rol del usuario y muestra solo las notas propias o, si se es administrador, las de todos los usuarios.
 - `POST /api/notas/{usuarioId}` - Crea una nueva nota asociada a un usuario.
 - `GET /api/notas/{id}` - Obtiene los detalles de una nota por su ID.
 - `PUT /api/notas/{id}` - Actualiza una nota existente por su ID.
