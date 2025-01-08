@@ -23,7 +23,7 @@ public class manejadorExcepciones {
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 LocalDateTime.now(),
                 HttpStatus.UNAUTHORIZED.value(),
-                "No autorizado",
+                "No autenticado",
                 ex.getMessage(),
                 request.getRequestURI());
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
@@ -33,11 +33,11 @@ public class manejadorExcepciones {
     public ResponseEntity<ErrorResponseDTO> handleUsuarioNoAutorizado(noAutorizadoException ex, HttpServletRequest request) {
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 LocalDateTime.now(),
-                HttpStatus.UNAUTHORIZED.value(),
+                HttpStatus.FORBIDDEN.value(),
                 "No autorizado",
                 ex.getMessage(),
                 request.getRequestURI());
-        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(elementoNoEncontradoException.class)
