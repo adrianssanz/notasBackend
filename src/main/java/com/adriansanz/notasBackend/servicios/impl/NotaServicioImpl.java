@@ -101,10 +101,11 @@ public class NotaServicioImpl implements NotaServicio {
             throw new idInvalidoException("El id proporcionado no es válido: " + id);
         }
 
-        validarNotaUsuario(session, nota);
-
         Nota notaNueva = notaRepositorio.findById(id)
-                .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
+        .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
+
+        validarNotaUsuario(session, notaNueva);
+
         notaNueva.setTitulo(nota.getTitulo());
         notaNueva.setDescripcion(nota.getDescripcion());
         notaRepositorio.save(notaNueva);
