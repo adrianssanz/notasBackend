@@ -60,7 +60,7 @@ public class AuthServicioImpl implements AuthServicio {
         String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.getPassword());
         usuario.setPassword(encryptedPassword);
         
-        Rol rol = rolRepositorio.findById(1L).get();
+        Rol rol = rolRepositorio.findById(2L).get();
         usuario.setRol(rol);
 
         usuarioRepositorio.save(usuario);
