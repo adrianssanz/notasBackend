@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,11 @@ public class Usuario {
     @Size(max = 10, message = "El usuario no puede tener más de 10 caracteres")
     @Column(name ="usuario", unique = true)
     private String usuario;
+
+    @NotEmpty(message = "El email no puede estar vacío")
+    @Email(message = "El email debe ser válido")
+    @Column(name="email", unique = true)
+    private String email;
 
     @NotEmpty(message = "La contraseña no puede estar vacía")
     @Column(name = "password", nullable = false)

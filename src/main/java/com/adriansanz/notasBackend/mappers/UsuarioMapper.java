@@ -14,6 +14,7 @@ public class UsuarioMapper {
         return new UsuarioDTO(
                 usuario.getId(),
                 usuario.getUsuario(),
+                usuario.getEmail(),
                 RolMapper.toRolDTO(usuario.getRol())
         );
     }
