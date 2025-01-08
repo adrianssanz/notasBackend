@@ -13,6 +13,7 @@ import com.adriansanz.notasBackend.entidades.Estado;
 import com.adriansanz.notasBackend.entidades.Nota;
 import com.adriansanz.notasBackend.entidades.Usuario;
 import com.adriansanz.notasBackend.excepciones.idInvalidoException;
+import com.adriansanz.notasBackend.excepciones.noAutorizadoException;
 import com.adriansanz.notasBackend.excepciones.elementoNoEncontradoException;
 import com.adriansanz.notasBackend.mappers.NotaMapper;
 import com.adriansanz.notasBackend.repositorios.EstadoRepositorio;
@@ -29,45 +30,55 @@ public class NotaServicioImpl implements NotaServicio {
     private AuthServicio authServicio;
     private EstadoRepositorio estadoRepositorio;
 
-    public NotaServicioImpl(NotaRepositorio notaRepositorio, AuthServicio authServicio, EstadoRepositorio estadoRepositorio) {
+    public NotaServicioImpl(NotaRepositorio notaRepositorio, AuthServicio authServicio,
+            EstadoRepositorio estadoRepositorio) {
         this.notaRepositorio = notaRepositorio;
         this.estadoRepositorio = estadoRepositorio;
         this.authServicio = authServicio;
     }
 
+    //Metodo para validar que la nota con la que se trabaja es del usuario loggeado
+    public void validarNotaUsuario(HttpSession session, Nota nota) {
+        Usuario usuario = authServicio.getSesionUsuario(session);
+        if (!usuario.getId().equals(nota.getUsuario().getId()) && usuario.getRol().getId() == 2) {
+            throw new noAutorizadoException("No tienes permisos para realizar esta acción.");
+        }
+    }
+
+    //GET ALL
     @Override
     public ResponseEntity<List<NotaDTO>> getAllNotas(int page, int size, HttpSession session) {
         Usuario usuario = authServicio.getSesionUsuario(session);
         Pageable pageable = PageRequest.of(page, size);
         List<Nota> notas;
-        if(usuario.getRol().getId()!=2) {
+        if (usuario.getRol().getId() != 2) {
             notas = notaRepositorio.findAll(pageable).getContent();
         } else {
             notas = notaRepositorio.findByUsuario(usuario, pageable).getContent();
         }
-        
+
         return ResponseEntity.status(HttpStatus.OK).body(NotaMapper.toNotaDTOList(notas));
     }
 
+    //GET BY ID
     @Override
-    public ResponseEntity<NotaDTO> getNotaById(Long id) {
+    public ResponseEntity<NotaDTO> getNotaById(Long id, HttpSession session) {
         if (id == null || id <= 0) {
             throw new idInvalidoException("El id proporcionado no es válido: " + id);
         }
 
         Nota nota = notaRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
+
+        validarNotaUsuario(session, nota);
+
         return ResponseEntity.status(HttpStatus.OK).body(NotaMapper.toNotaDTO(nota));
     }
 
+    //CREATE 
     @Override
-    public ResponseEntity<NotaDTO> createNota(Nota nota, Long usuarioId) {
-        if (usuarioId == null || usuarioId <= 0) {
-            throw new idInvalidoException("El id proporcionado no es válido: " + usuarioId);
-        }
-
-        Usuario usuario = usuarioRepositorio.findById(usuarioId)
-                .orElseThrow(() -> new elementoNoEncontradoException(usuarioId, "Usuario no encontrado con id: "));
+    public ResponseEntity<NotaDTO> createNota(Nota nota, HttpSession session) {
+        Usuario usuario = authServicio.getSesionUsuario(session);
         Nota notaNueva = new Nota();
 
         Estado estado = estadoRepositorio.findById(1L)
@@ -83,11 +94,14 @@ public class NotaServicioImpl implements NotaServicio {
         return ResponseEntity.status(HttpStatus.CREATED).body(NotaMapper.toNotaDTO(notaNueva));
     }
 
+    //UPDATE
     @Override
-    public ResponseEntity<NotaDTO> updateNota(Long id, Nota nota) {
+    public ResponseEntity<NotaDTO> updateNota(Long id, Nota nota, HttpSession session) {
         if (id == null || id <= 0) {
             throw new idInvalidoException("El id proporcionado no es válido: " + id);
         }
+
+        validarNotaUsuario(session, nota);
 
         Nota notaNueva = notaRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
@@ -97,20 +111,25 @@ public class NotaServicioImpl implements NotaServicio {
         return ResponseEntity.status(HttpStatus.OK).body(NotaMapper.toNotaDTO(notaNueva));
     }
 
+    //DELETE
     @Override
-    public ResponseEntity<Void> deleteNota(Long id) {
+    public ResponseEntity<Void> deleteNota(Long id, HttpSession session) {
         if (id == null || id <= 0) {
             throw new idInvalidoException("El id proporcionado no es válido: " + id);
         }
 
         Nota nota = notaRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
+
+        validarNotaUsuario(session, nota);
+
         notaRepositorio.delete(nota);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    //UPDATE ESTADO
     @Override
-    public ResponseEntity<NotaDTO> updateEstadoNota(Long id) {
+    public ResponseEntity<NotaDTO> updateEstadoNota(Long id, HttpSession session) {
         if (id == null || id <= 0) {
             throw new idInvalidoException("El id proporcionado no es válido: " + id);
         }
@@ -118,14 +137,14 @@ public class NotaServicioImpl implements NotaServicio {
         Nota nota = notaRepositorio.findById(id)
                 .orElseThrow(() -> new elementoNoEncontradoException(id, "Nota no encontrada con id: "));
 
-        if( nota.getEstado().getId() == 1){
+        if (nota.getEstado().getId() == 1) {
             Estado estado = estadoRepositorio.findById(2L)
-                .orElseThrow(() -> new elementoNoEncontradoException(2L, "Estado no encontrado con id: "));
-                nota.setEstado(estado);
-        } else{
+                    .orElseThrow(() -> new elementoNoEncontradoException(2L, "Estado no encontrado con id: "));
+            nota.setEstado(estado);
+        } else {
             Estado estado = estadoRepositorio.findById(1L)
-                .orElseThrow(() -> new elementoNoEncontradoException(1L, "Estado no encontrado con id: "));
-                nota.setEstado(estado);
+                    .orElseThrow(() -> new elementoNoEncontradoException(1L, "Estado no encontrado con id: "));
+            nota.setEstado(estado);
         }
 
         notaRepositorio.save(nota);

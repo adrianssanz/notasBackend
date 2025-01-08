@@ -14,13 +14,13 @@ import jakarta.servlet.http.HttpSession;
 public interface NotaServicio {
     ResponseEntity<List<NotaDTO>> getAllNotas(int page, int size, HttpSession session);
 
-    ResponseEntity<NotaDTO> getNotaById(Long id);
+    ResponseEntity<NotaDTO> getNotaById(Long id, HttpSession session);
 
-    ResponseEntity<NotaDTO> createNota(Nota nota, Long usuarioId);
+    ResponseEntity<NotaDTO> createNota(Nota nota, HttpSession session);
 
-    ResponseEntity<NotaDTO> updateNota(Long id, Nota nota);
+    ResponseEntity<NotaDTO> updateNota(Long id, Nota nota, HttpSession session);
 
-    ResponseEntity<NotaDTO> updateEstadoNota(Long id);
+    ResponseEntity<NotaDTO> updateEstadoNota(Long id, HttpSession session);
 
-    ResponseEntity<Void> deleteNota(Long id);
+    ResponseEntity<Void> deleteNota(Long id, HttpSession session);
 }

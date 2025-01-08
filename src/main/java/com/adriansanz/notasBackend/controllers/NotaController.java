@@ -34,30 +34,29 @@ public class NotaController {
             HttpSession session) {
         return notaServicio.getAllNotas(page, size, session);
     }
-
-    @PostMapping("/{usuarioId}")
-    public ResponseEntity<NotaDTO> createNota(@PathVariable Long usuarioId, @Valid @RequestBody Nota nota) {
-        return notaServicio.createNota(nota, usuarioId);
+    @PostMapping
+    public ResponseEntity<NotaDTO> createNota(@Valid @RequestBody Nota nota, HttpSession session) {
+        return notaServicio.createNota(nota, session);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<NotaDTO> getNotaById(@PathVariable Long id) {
-        return notaServicio.getNotaById(id);
+    public ResponseEntity<NotaDTO> getNotaById(@PathVariable Long id, HttpSession session) {
+        return notaServicio.getNotaById(id, session);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<NotaDTO> updateNota(@PathVariable Long id, @Valid @RequestBody Nota nota){
-        return notaServicio.updateNota(id, nota);
+    public ResponseEntity<NotaDTO> updateNota(@PathVariable Long id, @Valid @RequestBody Nota nota, HttpSession session){
+        return notaServicio.updateNota(id, nota, session);
     }
 
     @PutMapping("/{id}/estado")
-    public ResponseEntity<NotaDTO> updateEstadoNota(@PathVariable Long id){
-        return notaServicio.updateEstadoNota(id);
+    public ResponseEntity<NotaDTO> updateEstadoNota(@PathVariable Long id, HttpSession session){
+        return notaServicio.updateEstadoNota(id, session);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNota(@PathVariable Long id) {
-        notaServicio.deleteNota(id);
+    public ResponseEntity<Void> deleteNota(@PathVariable Long id, HttpSession session) {
+        notaServicio.deleteNota(id, session);
         return ResponseEntity.noContent().build();
     }
 }
