@@ -31,12 +31,12 @@ Una API RESTful desarrollada con Spring Boot para gestionar roles y usuarios, co
 ---
 
 ### 3. AuthController
-**Base URL:** `/api/auth`
+**Base URL:** `/auth`
 
-- `POST /api/auth/login` - Autentica un usuario mediante sus credenciales.
+- `POST /auth/login` - Autentica un usuario mediante sus credenciales.
   - **Body:** `{ "usuario": "string", "password": "string" }`
-- `POST /api/auth/register` - Registra un nuevo usuario.
-- `POST /api/auth/logout` - Cierra la sesión del usuario autenticado.
+- `POST /auth/register` - Registra un nuevo usuario.
+- `POST /auth/logout` - Cierra la sesión del usuario autenticado.
 
 ---
 
