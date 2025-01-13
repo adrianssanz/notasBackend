@@ -16,21 +16,29 @@ public class AuthenticationFilter implements Filter {
     }
 
     @Override
-    public void doFilter(jakarta.servlet.ServletRequest request, jakarta.servlet.ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        HttpSession session = httpRequest.getSession(false); // Obtener la sesión si existe
+public void doFilter(jakarta.servlet.ServletRequest request, jakarta.servlet.ServletResponse response, FilterChain chain)
+        throws IOException, ServletException {
+    HttpServletRequest httpRequest = (HttpServletRequest) request;
+    HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        if (session == null || session.getAttribute("usuario") == null) {
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            httpResponse.setContentType("application/json");
-            httpResponse.getWriter().write("{\"error\": \"No estas loggeado\"}");
-            return;
-        }
-
+    // No aplicar filtro para las solicitudes OPTIONS (preflight CORS)
+    if ("OPTIONS".equals(httpRequest.getMethod())) {
         chain.doFilter(request, response);
+        return;
     }
+
+    HttpSession session = httpRequest.getSession(false); // Obtener la sesión si existe
+
+    if (session == null || session.getAttribute("usuario") == null) {
+        httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        httpResponse.setContentType("application/json");
+        httpResponse.getWriter().write("{\"error\": \"No estas loggeado\"}");
+        return;
+    }
+
+    chain.doFilter(request, response);
+}
+
 
     @Override
     public void destroy() {
