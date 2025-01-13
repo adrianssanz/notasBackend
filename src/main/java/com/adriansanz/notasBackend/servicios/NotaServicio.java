@@ -22,5 +22,5 @@ public interface NotaServicio {
 
     ResponseEntity<NotaDTO> updateEstadoNota(Long id, HttpSession session);
 
-    ResponseEntity<Void> deleteNota(Long id, HttpSession session);
+    ResponseEntity<Void> deleteNotaLogico(Long id, HttpSession session);
 }

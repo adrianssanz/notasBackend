@@ -29,7 +29,7 @@ public class Nota {
     private String titulo;
 
     @NotEmpty(message = "La descripción no puede estar vacía")
-    @Size(max = 100, message = "La descripción no puede tener más de 10 caracteres")
+    @Size(max = 255, message = "La descripción no puede tener más de 100 caracteres")
     @Column(name="descripcion")
     private String descripcion;
 
@@ -44,4 +44,8 @@ public class Nota {
     @ManyToOne
     @JoinColumn(name = "estado_id", nullable = false)
     private Estado estado;
+
+    @Column(name = "activo", nullable = false)
+    private Boolean activo = true;
+
 }

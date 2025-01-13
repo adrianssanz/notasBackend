@@ -8,5 +8,6 @@ import com.adriansanz.notasBackend.entidades.Nota;
 import com.adriansanz.notasBackend.entidades.Usuario;
 
 public interface NotaRepositorio extends JpaRepository<Nota, Long> {
-    Page<Nota> findByUsuario(Usuario usuario, Pageable pageable);
+    Page<Nota> findByUsuarioAndActivo(Usuario usuario, boolean activo, Pageable pageable);
+    Page<Nota> findByActivo(boolean activo, Pageable pageable);
 }

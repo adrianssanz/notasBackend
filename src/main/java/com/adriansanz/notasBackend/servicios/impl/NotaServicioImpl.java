@@ -52,9 +52,9 @@ public class NotaServicioImpl implements NotaServicio {
         Pageable pageable = PageRequest.of(page, size);
         List<Nota> notas;
         if (usuario.getRol().getId() != 2) {
-            notas = notaRepositorio.findAll(pageable).getContent();
+            notas = notaRepositorio.findByActivo(true, pageable).getContent();
         } else {
-            notas = notaRepositorio.findByUsuario(usuario, pageable).getContent();
+            notas = notaRepositorio.findByUsuarioAndActivo(usuario, true, pageable).getContent();
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(NotaMapper.toNotaDTOList(notas));
@@ -112,9 +112,9 @@ public class NotaServicioImpl implements NotaServicio {
         return ResponseEntity.status(HttpStatus.OK).body(NotaMapper.toNotaDTO(notaNueva));
     }
 
-    //DELETE
+    //DELETE LOGICO
     @Override
-    public ResponseEntity<Void> deleteNota(Long id, HttpSession session) {
+    public ResponseEntity<Void> deleteNotaLogico(Long id, HttpSession session) {
         if (id == null || id <= 0) {
             throw new idInvalidoException("El id proporcionado no es válido: " + id);
         }
@@ -124,7 +124,9 @@ public class NotaServicioImpl implements NotaServicio {
 
         validarNotaUsuario(session, nota);
 
-        notaRepositorio.delete(nota);
+        nota.setActivo(false);
+
+        notaRepositorio.save(nota);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
