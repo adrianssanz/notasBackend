@@ -29,7 +29,7 @@ public class Nota {
     private String titulo;
 
     @NotEmpty(message = "La descripción no puede estar vacía")
-    @Size(max = 255, message = "La descripción no puede tener más de 100 caracteres")
+    @Size(max = 255, message = "La descripción no puede tener más de 255 caracteres")
     @Column(name="descripcion")
     private String descripcion;
 
